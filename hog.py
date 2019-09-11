@@ -97,7 +97,7 @@ def is_swap(player_score, opponent_score):
     left_player, left_opp, condition = 0, 0, True
     right_player = player_score % 10
     right_opp = opponent_score % 10
-    print("Right Player",right_player)
+    "print(Right Player,right_player)"
     "print(Right Opp,left_player)"
     def left_val (score):
         while (True):
@@ -108,20 +108,18 @@ def is_swap(player_score, opponent_score):
         return int(score)
     left_player = left_val(player_score)
     left_opp = left_val(opponent_score)
-    print("Left Player", left_player)
+    "print(Left Player, left_player)"
     "print(Left Opp, left_opp)"
     a = left_player*right_player
     b = right_opp*left_opp
-    print("A",a)
-    print("B",b)
+    "print(A,a)"
+    "print(B,b)"
     if (a == b):
         condition = True
     else:
         condition = False
-    print("Condition", condition)
+    "print(Condition, condition)"
     return condition
-
-    # END PROBLEM 4
 
 
 def other(player):
@@ -143,7 +141,6 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
          goal=GOAL_SCORE, say=silence, feral_hogs=True):
     """Simulate a game and return the final scores of both players, with Player
     0's score first, and Player 1's score second.
-
     A strategy is a function that takes two total scores as arguments (the
     current player's score, and the opponent's score), and returns a number of
     dice that the current player will roll this turn.
@@ -173,7 +170,7 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
             k=num_rolls
             score0 = score0 + take_turn(num_rolls, score1, dice)
         if (player==1):
-            num_rolls = strategy1 (score0, score1)
+            num_rolls = strategy1 (score1, score0)
             if(abs(j-num_rolls) == 2 and feral_hogs==True):
                 score1 += 3
             j=num_rolls
@@ -181,11 +178,12 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
         "print(opponent, score1)this is a 0"
         "print(player, score0) this is a 10"
         swap = is_swap(score0, score1)
-        print("Score 0,1 before swap", score0,score1)
+        "print(Score 0,1 before swap, score0,score1)"
         if(swap==True):
             score0, score1 = score1, score0
-        print("Score 0,1 before swap", score0,score1)
+        "print(Score 0,1 before swap, score0,score1)"
         player= other(player)
+        say = say(score0, score1)
     # END PROBLEM 5
     # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
     # BEGIN PROBLEM 6
@@ -276,6 +274,21 @@ def announce_highest(who, previous_high=0, previous_score=0):
     assert who == 0 or who == 1, 'The who argument should indicate a player.'
     # BEGIN PROBLEM 7
     "*** YOUR CODE HERE ***"
+    def say(score0, score1):
+        "nonlocal previous_high, previous_score"
+        prev_high = previous_high
+        prev_score = previous_score
+        if who == 0:
+            current_score = score0 - prev_score
+            prev_score = score0
+        elif who == 1:
+            current_score = score1 - prev_score
+            prev_score = score1
+        if current_score > prev_high:
+            prev_high = current_score
+            print(current_score, "point(s)! That's the biggest gain yet for Player", who)
+        return announce_highest(who, prev_high, prev_score)
+    return say
     # END PROBLEM 7
 
 
