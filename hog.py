@@ -314,7 +314,6 @@ def always_roll(n):
         return n
     return strategy
 
-
 def make_averaged(fn, num_samples=1000):
     """Return a function that returns the average value of FN when called.
 
@@ -328,7 +327,14 @@ def make_averaged(fn, num_samples=1000):
     """
     # BEGIN PROBLEM 8
     "*** YOUR CODE HERE ***"
-    # END PROBLEM 8
+    def print_and_return (*args):
+        i=0
+        total=0
+        while (i<num_samples):
+            total = total + fn(*args)
+            i=i+1
+        return total/num_samples
+    return print_and_return
 
 
 def max_scoring_num_rolls(dice=six_sided, num_samples=1000):
